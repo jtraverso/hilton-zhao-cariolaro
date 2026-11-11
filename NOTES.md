@@ -72,3 +72,33 @@ See the report for the precise wall.
 {0,3}, {1,4}, {2,5}; proved isomorphic to the Petersen graph (outer 5-cycle, spokes i–i+5, inner
 pentagram 5-7-9-6-8) minus vertex 0. Class 2 by a pruned finite check (`decide`, 12 edge colours),
 not overfull (|E| = 12 = 3·⌊9/2⌋).
+
+## Plan for the full Cariolaro–Cariolaro theorem (2026-11-11, second session)
+
+Reduction already done: in a critical petal graph `H ≠ P*`, a core cycle `R` without internal
+petals is impossible (`colorable_of_noInternalPetal`). If `R` carries an internal petal, uncolour
+the edges at `R` in a colouring of `H − e` (criticality) and recolour `R`; this is the
+*chorded-cycle lemma* below, applied to the cyclic sequence of `R` with chords = internal petals and
+external restrictions = colours of the far petal edges. Only the hexagon with three antipodal
+chords is excluded, and then `H ≅ P*` (connectedness).
+
+**Chorded-cycle lemma** (combinatorial, on lists). A cyclic list of vertex types `ext a`
+(missing colour ≠ a) or `lab l` (vertices with equal label miss different colours; a label used
+once = free vertex). A solution: a proper cyclic edge colouring (pairs (in, out) per vertex).
+Claim: every well-formed instance of length ≥ 2 is solvable unless (E1) no label repeated, no free
+vertex, odd length, all ext equal; (E2) the hexagon with antipodal labels; (E3) length 2 with a
+repeated label. Strong induction on the length with *safe reductions* (every solution of the
+reduced instance extends), all verified by brute force before formalizing:
+1. chord at distance 1 → one free vertex;
+2. chord at distance 2 (x z y) → one free vertex, the partner of z becomes free;
+3. a free vertex w and a neighbour v (a chord end if possible) → delete both;
+4. minimal chord at distance p ≥ 3 (no free vertex): replace the arc x a₁ … a_{p−1} y by one
+   vertex `ext a`, the partners of a₁, a_{p−1} get `ext a`, the other partners become free
+   (safe by the arc lemma: the arc can be coloured unless t₁ = κ₁ and t_{p−1} = κ₂, where κ are the
+   boundary colours and t the restrictions); fallback for the parity case: delete the arc
+   (safe when t₁ ≠ t_{p−1}).
+The arc lemmas hold for every p: a finite automaton on 9-bit states (pairs (first colour, current
+colour)), whose reachable states are enumerated and checked with `decide`.
+Chordless instances: the existing cycle-colouring lemma (non-constant restrictions), extended to
+free vertices; constant even: alternate. Estimated size ≈ 4–5k lines including the graph bridge
+(general assembly with internal petals, hexagon ⇒ `G ≅ P*`).
