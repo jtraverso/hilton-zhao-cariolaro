@@ -1,0 +1,29 @@
+name = "hilton_zhao"
+version = "0.1.0"
+defaultTargets = ["CoreDeg2", "CoreDeg2Challenge", "CoreDeg2Solution"]
+requiresModuleSystem = true
+
+[leanOptions]
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc3"
+
+[[require]]
+name = "ccjs_overfull"
+git = "https://github.com/jtraverso/overfull-critical-graphs"
+rev = "b85da9ac66e0fb8b9873a8bea0c057f78c9d186c"
+
+[[lean_lib]]
+name = "CoreDeg2"
+globs = ["CoreDeg2.+"]
+
+[[lean_lib]]
+name = "CoreDeg2Challenge"
+roots = ["CoreDeg2Challenge"]
+
+[[lean_lib]]
+name = "CoreDeg2Solution"
+roots = ["CoreDeg2Solution"]

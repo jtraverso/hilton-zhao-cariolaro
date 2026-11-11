@@ -1,0 +1,36 @@
+{
+  "challenge_module": "CoreDeg2Challenge",
+  "solution_module": "CoreDeg2Solution",
+  "theorem_names": [
+    "CoreDeg2.hiltonZhao_critical",
+    "CoreDeg2.hiltonZhao_two_le",
+    "CoreDeg2.hiltonZhao_core_regular",
+    "CoreDeg2.hiltonZhao_min_degree",
+    "CoreDeg2.hiltonZhao_min_degree_eq",
+    "CoreDeg2.colorable_of_core_deg_le_one",
+    "CoreDeg2.colorable_of_low_degree",
+    "CoreDeg2.petal_structure",
+    "CoreDeg2.three_mul_card_edgeFinset",
+    "CoreDeg2.colorable_of_card_edgeFinset",
+    "CoreDeg2.colorable_of_noInternalPetal",
+    "CoreDeg2.pStar_iso",
+    "CoreDeg2.pStar_maxDegree",
+    "CoreDeg2.pStar_core",
+    "CoreDeg2.pStar_connected",
+    "CoreDeg2.pStar_not_colorable",
+    "CoreDeg2.pStar_not_overfull"
+  ],
+  "definition_names": [
+    "CoreDeg2.pStarEdges",
+    "CoreDeg2.pStar",
+    "CoreDeg2.pStarDecAdj",
+    "CoreDeg2.petersenEdges",
+    "CoreDeg2.petersen"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
