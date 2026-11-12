@@ -18,7 +18,9 @@
     "CoreDeg2.pStar_core",
     "CoreDeg2.pStar_connected",
     "CoreDeg2.pStar_not_colorable",
-    "CoreDeg2.pStar_not_overfull"
+    "CoreDeg2.pStar_not_overfull",
+    "CoreDeg2.cariolaro_iff",
+    "CoreDeg2.cariolaro"
   ],
   "definition_names": [
     "CoreDeg2.pStarEdges",

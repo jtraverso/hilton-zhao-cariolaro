@@ -102,3 +102,13 @@ colour)), whose reachable states are enumerated and checked with `decide`.
 Chordless instances: the existing cycle-colouring lemma (non-constant restrictions), extended to
 free vertices; constant even: alternate. Estimated size ≈ 4–5k lines including the graph bridge
 (general assembly with internal petals, hexagon ⇒ `G ≅ P*`).
+
+## Outcome (second session)
+
+The plan worked without the paper's surgery induction. Formalized as planned, with two
+simplifications found while formalizing: the free-vertex reduction was not needed (the arc
+reduction tolerates free inner vertices), and the minimal chord is chosen as the minimal *closing*
+chord over all rotations (`Chord/Main.lean`). Files: `Chord/Defs, Index, Chordless, Func, Arc,
+Reduce, Reds, ArcRed, Main` (the lemma), `Assemble2` (assembly with internal petals), `HexIso`
+(recognising `P*`), `Full` (the theorem `CoreDeg2Lib.cariolaro`). Challenge statements
+`cariolaro_iff` and `cariolaro`.

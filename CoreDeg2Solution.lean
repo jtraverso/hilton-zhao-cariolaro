@@ -5,7 +5,7 @@ Authors: Juan Pablo Traverso Gianini
 -/
 module
 
-public import CoreDeg2.NoInternal
+public import CoreDeg2.Full
 public import Mathlib.Data.Fin.VecNotation
 
 /-!
@@ -336,5 +336,41 @@ theorem pStar_not_colorable : ¬ pStar.lineGraph.Colorable pStar.maxDegree := by
 theorem pStar_not_overfull :
     ¬ pStar.maxDegree * (Fintype.card (Fin 9) / 2) < #pStar.edgeFinset := by
   exact pStar_not_overfull'
+
+theorem pStar_adj_iff_L : ∀ a b : Fin 9, pStar.Adj a b ↔ CoreDeg2Lib.pStarL.Adj a b := by
+  decide
+
+/-- The library copy of `P*` is `P*`. -/
+def isoLP : CoreDeg2Lib.pStarL ≃g pStar where
+  toEquiv := Equiv.refl _
+  map_rel_iff' {a b} := pStar_adj_iff_L a b
+
+/-! ### The theorem of Cariolaro and Cariolaro -/
+
+/-- **Cariolaro–Cariolaro (2003).** A connected graph with maximum degree three whose core has
+maximum degree at most two is of class two if and only if it is isomorphic to `P*`. -/
+theorem cariolaro_iff {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] (hconn : G.Connected) (hΔ : G.maxDegree = 3)
+    (hcore : ∀ v, G.degree v = G.maxDegree →
+      #((G.neighborFinset v).filter fun u => G.degree u = G.maxDegree) ≤ 2) :
+    ¬ G.lineGraph.Colorable 3 ↔ Nonempty (G ≃g pStar) := by
+  constructor
+  · intro hcl
+    obtain ⟨e⟩ := CoreDeg2Lib.cariolaro G hconn hcore hΔ hcl
+    exact ⟨e.symm.trans isoLP⟩
+  · rintro ⟨e⟩ hcol
+    apply pStar_not_colorable
+    rw [pStar_maxDegree]
+    exact CoreDeg2Lib.lineGraph_colorable_of_iso e.symm hcol
+
+/-- **Cariolaro–Cariolaro (2003), Theorem 1.** A connected graph with maximum degree three whose
+core has maximum degree at most two, other than `P*`, is of class one. -/
+theorem cariolaro {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] (hconn : G.Connected) (hΔ : G.maxDegree = 3)
+    (hcore : ∀ v, G.degree v = G.maxDegree →
+      #((G.neighborFinset v).filter fun u => G.degree u = G.maxDegree) ≤ 2)
+    (hP : ¬ Nonempty (G ≃g pStar)) : G.lineGraph.Colorable 3 := by
+  by_contra hcl
+  exact hP ((cariolaro_iff G hconn hΔ hcore).1 hcl)
 
 end CoreDeg2

@@ -2,7 +2,7 @@
 version: "v0.4"
 
 project:
-  name: "Graphs whose core has maximum degree two: Hilton–Zhao structure and partial Cariolaro–Cariolaro"
+  name: "Graphs whose core has maximum degree two: Hilton–Zhao structure and the Cariolaro–Cariolaro theorem"
   description: >-
     A Lean 4 / Mathlib formalization of results on finite simple graphs G whose core (the
     vertices of maximum degree Δ) has maximum degree at most two, stated as: every vertex of
@@ -19,8 +19,14 @@ project:
     then G is 3-edge-colourable (Cariolaro–Cariolaro Lemma 7, for a single core cycle). The graph
     P* (Petersen minus a vertex) is defined on Fin 9, proved isomorphic to the Petersen graph minus
     a vertex, and shown to satisfy the hypotheses, to be connected, of class two and not overfull.
-    The full Cariolaro–Cariolaro theorem (Δ = 3 and G ≠ P* imply class one) is NOT formalized: the
-    case where every core cycle carries an internal petal remains. Vizing's theorem and Vizing's
+    Cariolaro–Cariolaro (2003): a connected graph with Δ = 3 whose core has maximum degree at most
+    two is not 3-edge-colourable if and only if it is isomorphic to P* (cariolaro_iff, cariolaro).
+    The proof recolours one core cycle with its petals in a colouring of G − e (criticality): a
+    combinatorial chorded-cycle lemma (a cyclic sequence of vertices with chords and external
+    restrictions has a proper 3-edge-colouring whose missing colours differ along chords and avoid
+    the restrictions, unless it is the hexagon with three antipodal chords or a chordless odd cycle
+    with constant restrictions) proved by induction with safe local reductions; the arc reduction
+    rests on a finite automaton whose reachable states are checked by decide. Vizing's theorem and Vizing's
     adjacency lemma are lake dependencies on PALOMAR-2026-10-15-000004 and
     PALOMAR-2026-11-04-000009; Kempe chains and their end-point lemma come from the former.
   authors:
@@ -70,10 +76,11 @@ sources:
     location: "Electronic Journal of Combinatorics 10 (2003), #R6"
     relationship: "formalizes"
     note: >-
-      Partially: Lemma 3 (petal structure) and Lemma 7 (no internal petal ⇒ class one, here for a
-      single core cycle, with a proof by recolouring the whole cycle and one Kempe swap).
-      Theorems 1 and 2 are not formalized. The formalization is by a different author; the
-      article's authors were not involved.
+      Theorem 1 (with the converse: P* is of class two), Lemma 3 (petal structure) and Lemma 7 (for
+      a single core cycle). The proof of Theorem 1 is not the paper's: instead of its induction on
+      the order with the 4-vertex surgery, a core cycle with internal petals is recoloured by a
+      combinatorial lemma on chorded cycles (reductions + finite automaton). The formalization is
+      by a different author; the article's authors were not involved.
     license: "unknown"
     author_endorsement: "not-contacted"
   - title: "The Hilton–Zhao conjecture is true for graphs with maximum degree 4"
@@ -100,9 +107,9 @@ related_formalizations:
 
 status:
   scope: >-
-    Hilton–Zhao 1992 structure lemma and corollaries; Cariolaro–Cariolaro Lemmas 3 and 7 (the
-    latter for one core cycle); P*. Not formalized: Cariolaro–Cariolaro Theorems 1–2 in the case
-    where every core cycle carries an internal petal; the Hilton–Zhao conjecture for Δ ≥ 4.
+    Hilton–Zhao 1992 structure lemma and corollaries; Cariolaro–Cariolaro Theorem 1 and its
+    converse, Lemmas 3 and 7; P*. Not formalized: the Hilton–Zhao conjecture for Δ ≥ 4
+    (Cranston–Rabern, Cao–Chen–Jing–Shan).
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -143,7 +150,8 @@ review:
     - "Claude Opus 5.5 (AI agent in Claude Code, acting for the author)"
   notes: >-
     Agent review by Claude Opus 5.5, distinct from the mechanical verification: statements checked
-    against the sources and on small cases (odd cycles: Δ = 2, every vertex has two Δ-neighbours;
+    against the sources; the chorded-cycle lemma and its reduction strategy were first checked by
+    brute force on all instances up to length 8–10; statements checked on small cases (odd cycles: Δ = 2, every vertex has two Δ-neighbours;
     P*: satisfies all Δ = 3 conclusions, 3·12 = 4·9, and every core cycle carries internal
     petals, consistently with Lemma 7). No independent human review has been performed. The
     results are classical; no mathematical novelty is claimed.
@@ -168,6 +176,8 @@ alignment:
     - {source: "P*: connected", lean: "CoreDeg2.pStar_connected", module: "CoreDeg2Challenge", status: "proved"}
     - {source: "P*: class two", lean: "CoreDeg2.pStar_not_colorable", module: "CoreDeg2Challenge", status: "proved"}
     - {source: "P*: not overfull", lean: "CoreDeg2.pStar_not_overfull", module: "CoreDeg2Challenge", status: "proved"}
+    - {source: "Cariolaro–Cariolaro 2003: Δ = 3, core max degree ≤ 2: class two ⇔ G ≅ P*", lean: "CoreDeg2.cariolaro_iff", module: "CoreDeg2Challenge", status: "proved"}
+    - {source: "Cariolaro–Cariolaro 2003, Theorem 1", lean: "CoreDeg2.cariolaro", module: "CoreDeg2Challenge", status: "proved"}
 
 acknowledgements: >-
   Mathlib and the Lean community.

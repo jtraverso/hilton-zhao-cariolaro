@@ -1,4 +1,4 @@
-# Graphs whose core has maximum degree two (Hilton–Zhao; Cariolaro–Cariolaro, partial)
+# Graphs whose core has maximum degree two (Hilton–Zhao; Cariolaro–Cariolaro)
 
 Lean 4 / Mathlib formalization of results on finite simple graphs `G` whose *core* (the subgraph
 induced by the vertices of maximum degree `Δ`) has maximum degree at most two.
@@ -16,9 +16,13 @@ induced by the vertices of maximum degree `Δ`) has maximum degree at most two.
   Petersen graph minus a vertex: it satisfies the hypotheses, is connected, of class two and not
   overfull.
 
-Not formalized: the full Cariolaro–Cariolaro theorem (`Δ = 3`, `G ≠ P*` ⇒ class one), whose
-remaining case is a petal graph in which every core cycle carries an internal petal. See
-`NOTES.md` for the exact statements from the sources.
+* **Cariolaro–Cariolaro (2003).** A connected graph with `Δ = 3` whose core has maximum degree at
+  most two is of class two if and only if it is isomorphic to `P*` (`cariolaro_iff`, `cariolaro`).
+  The proof reduces, via criticality, to recolouring one core cycle together with its petals: a
+  combinatorial *chorded-cycle lemma* (a cyclic sequence with chords and external restrictions
+  admits a suitable proper 3-edge-colouring unless it is the hexagon with three antipodal chords,
+  or a chordless odd cycle with constant restrictions), proved by induction with safe local
+  reductions and a finite automaton checked by `decide`. See `NOTES.md`.
 
 Class one is `G.lineGraph.Colorable G.maxDegree`. The core condition is stated as
 `∀ v, G.degree v = G.maxDegree → #((G.neighborFinset v).filter fun u => G.degree u = G.maxDegree) ≤ 2`.

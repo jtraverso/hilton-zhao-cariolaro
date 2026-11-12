@@ -2,3 +2,5 @@
 _check_*.lean
 build.log
 *.out
+_checks.sh
+full_build.log

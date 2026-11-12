@@ -197,4 +197,24 @@ theorem pStar_not_overfull :
     ¬ pStar.maxDegree * (Fintype.card (Fin 9) / 2) < #pStar.edgeFinset := by
   sorry
 
+/-! ### The theorem of Cariolaro and Cariolaro -/
+
+/-- **Cariolaro–Cariolaro (2003).** A connected graph with maximum degree three whose core has
+maximum degree at most two is of class two if and only if it is isomorphic to `P*`. -/
+theorem cariolaro_iff {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] (hconn : G.Connected) (hΔ : G.maxDegree = 3)
+    (hcore : ∀ v, G.degree v = G.maxDegree →
+      #((G.neighborFinset v).filter fun u => G.degree u = G.maxDegree) ≤ 2) :
+    ¬ G.lineGraph.Colorable 3 ↔ Nonempty (G ≃g pStar) := by
+  sorry
+
+/-- **Cariolaro–Cariolaro (2003), Theorem 1.** A connected graph with maximum degree three whose
+core has maximum degree at most two, other than `P*`, is of class one. -/
+theorem cariolaro {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] (hconn : G.Connected) (hΔ : G.maxDegree = 3)
+    (hcore : ∀ v, G.degree v = G.maxDegree →
+      #((G.neighborFinset v).filter fun u => G.degree u = G.maxDegree) ≤ 2)
+    (hP : ¬ Nonempty (G ≃g pStar)) : G.lineGraph.Colorable 3 := by
+  sorry
+
 end CoreDeg2
